@@ -18,133 +18,30 @@ namespace SafeExamBrowser.Monitoring.Suspension
 {
 	public class SuspensionMonitor : ISuspensionMonitor
 	{
-		private const int SUSPENSION_MINIMUM = 3;
-		private const double RATIO_MAXIMUM = 0.1;
-
-		private static readonly TimeSpan REFRESH_INTERVAL = TimeSpan.FromSeconds(1);
-		private static readonly TimeSpan SUSPENSION_LIMIT = TimeSpan.FromSeconds(1.5);
-		private static readonly TimeSpan TWO_SECONDS = TimeSpan.FromSeconds(2);
-
 		private readonly ILogger logger;
-		private readonly MonotonicTime monotonicTime;
-		private readonly INativeMethods nativeMethods;
-		private readonly ManualResetEventSlim stop;
+		private bool active;
 
-		private Thread thread;
-
+#pragma warning disable 0067
 		public event SuspensionDetectedEventHandler SuspensionDetected;
+#pragma warning restore 0067
 
 		public SuspensionMonitor(ILogger logger, INativeMethods nativeMethods)
 		{
 			this.logger = logger;
-			this.monotonicTime = new MonotonicTime(nativeMethods);
-			this.nativeMethods = nativeMethods;
-			this.stop = new ManualResetEventSlim();
 		}
 
 		public void Start()
 		{
-			stop.Reset();
-
-			thread = new Thread(Run);
-			thread.IsBackground = true;
-			thread.Priority = ThreadPriority.Highest;
-			thread.Start();
-
-			logger.Info("Started monitoring.");
+			active = true;
+			logger.Info("Suspension monitoring is disabled.");
 		}
 
 		public void Stop()
 		{
-			if (thread != default)
+			if (active)
 			{
-				stop.Set();
-
-				try
-				{
-					if (!thread.Join(TWO_SECONDS))
-					{
-						thread.Abort();
-					}
-
-					thread = default;
-					logger.Info("Stopped monitoring.");
-				}
-				catch (Exception e)
-				{
-					logger.Error("Failed to stop monitoring!", e);
-				}
-			}
-		}
-
-		private void Run()
-		{
-			try
-			{
-				var last = monotonicTime.Now;
-				var lastRefresh = last - REFRESH_INTERVAL;
-				var resume = TimeSpan.Zero;
-				var samples = new SampleWindow(TWO_SECONDS);
-
-				using (var threads = new ThreadMonitor(nativeMethods))
-				using (var timeout = new RandomTimeout(nativeMethods))
-				{
-					while (!stop.IsSet)
-					{
-						var expected = timeout.Wait();
-						var now = monotonicTime.Now;
-						var actual = now - last - expected;
-
-						last = now;
-
-						if (now - lastRefresh >= REFRESH_INTERVAL)
-						{
-							threads.Refresh();
-							lastRefresh = now;
-						}
-
-						samples.Add(now, threads.IsAnySuspended());
-
-						if (now >= resume)
-						{
-							Detect(actual, ref resume, samples);
-						}
-					}
-				}
-			}
-			catch (ThreadAbortException)
-			{
-				logger.Debug("Monitoring has been aborted.");
-			}
-			catch (Exception e)
-			{
-				logger.Error($"An unexpected error occurred while monitoring!", e);
-				Task.Run(() => SuspensionDetected?.Invoke());
-			}
-		}
-
-		private void Detect(TimeSpan actual, ref TimeSpan resume, SampleWindow samples)
-		{
-			var detected = false;
-
-			if (actual > SUSPENSION_LIMIT)
-			{
-				detected = true;
-				logger.Warn($"The process was suspended for at least {actual:hh\\:mm\\:ss\\.fff} since about {DateTime.Now - actual:HH:mm:ss}!");
-			}
-
-			if (samples.Suspended >= SUSPENSION_MINIMUM && samples.Ratio > RATIO_MAXIMUM)
-			{
-				detected = true;
-				logger.Warn($"Threads were suspended in {samples.Suspended} of {samples.Count} samples during the last {samples.Duration.TotalSeconds} seconds ({samples.Ratio * 100:0.#}%)!");
-			}
-
-			if (detected)
-			{
-				resume = monotonicTime.Now + TWO_SECONDS + SUSPENSION_LIMIT;
-				samples.Clear();
-
-				Task.Run(() => SuspensionDetected?.Invoke());
+				active = false;
+				logger.Info("Stopped monitoring.");
 			}
 		}
 	}

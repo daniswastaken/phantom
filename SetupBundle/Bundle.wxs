@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
-    <Bundle Name="Safe Exam Browser"
+    <Bundle Name="Phantom"
             IconSourceFile="$(var.Setup.ProjectDir)Resources\Application.ico"
-            Manufacturer="!(bind.packageManufacturer.SetupX86)"
-            UpgradeCode="26C1045A-99CC-4479-987B-376390379441"
-            Version="!(bind.packageVersion.SetupX86)">
+            Manufacturer="!(bind.packageManufacturer.SetupX64)"
+            UpgradeCode="39CC9E84-FCE4-4E04-A7F1-987EFEFF4A95"
+            Version="!(bind.packageVersion.SetupX64)">
         <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLargeLicense">
             <bal:WixStandardBootstrapperApplication LicenseFile="$(var.Setup.ProjectDir)Resources\License.rtf"
                                                     LocalizationFile="Resources\Theme.wxl"

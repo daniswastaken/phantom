@@ -15,7 +15,7 @@
         </xsl:copy>
         <wix:File Id="ApplicationIconFile" Source="Resources\Application.ico" />
         <wix:File Id="ConfigurationIconFile" Source="Resources\ConfigurationFile.ico" />
-        <wix:ProgId Id="ConfigurationFileExtension" Description="SEB Configuration File" Icon="ConfigurationIconFile" Advertise="no">
+        <wix:ProgId Id="PhantomConfigurationFile" Description="Phantom Configuration File" Icon="ConfigurationIconFile" Advertise="no">
             <wix:Extension Id="phantom" ContentType="application/phantom" Advertise="no">
                 <wix:Verb Id="open" Command="Open" Argument="&quot;%1&quot;" TargetFile="MainExecutable" />
             </wix:Extension>
