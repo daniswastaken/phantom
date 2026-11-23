@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="SafeExamBrowser.UserInterface.Mobile.Controls.ActionCenter.KeyboardLayoutControl" x:ClassModifier="internal"
+<UserControl x:Class="SafeExamBrowser.UserInterface.Mobile.Controls.ActionCenter.KeyboardLayoutControl" x:ClassModifier="internal"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -17,7 +17,7 @@
     </UserControl.Resources>
     <Grid x:Name="Grid" Background="{StaticResource ActionCenterDarkBrush}" Height="82" Margin="2">
         <Popup x:Name="Popup" IsOpen="False" Placement="Top" PlacementTarget="{Binding ElementName=Button}" KeyUp="Popup_KeyUp">
-            <Border Background="Gray">
+            <Border Background="{StaticResource PopupBackgroundBrush}" BorderBrush="{StaticResource PopupBorderBrush}" BorderThickness="1">
                 <ScrollViewer MaxHeight="250" VerticalScrollBarVisibility="Auto" Template="{StaticResource SmallBarScrollViewer}">
                     <StackPanel x:Name="LayoutsStackPanel" />
                 </ScrollViewer>
@@ -29,7 +29,7 @@
                     <RowDefinition Height="2*" />
                     <RowDefinition Height="3*" />
                 </Grid.RowDefinitions>
-                <fa:ImageAwesome Grid.Row="0" Foreground="Black" Icon="KeyboardOutline" Margin="2" VerticalAlignment="Center" />
+                <fa:ImageAwesome Grid.Row="0" Foreground="White" Icon="KeyboardOutline" Margin="2" VerticalAlignment="Center" />
                 <TextBlock Grid.Row="1" x:Name="Text" FontSize="15" Foreground="White" TextAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" VerticalAlignment="Bottom" />
             </Grid>
         </Button>

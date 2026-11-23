@@ -26,8 +26,8 @@
             <StackPanel Grid.Column="2" VerticalAlignment="Center">
                 <TextBlock x:Name="CultureNameTextBlock" HorizontalAlignment="Left" Margin="5,0,10,0" TextDecorations="Underline" VerticalAlignment="Center" />
                 <StackPanel Orientation="Horizontal">
-                    <fa:ImageAwesome Foreground="Gray" Height="10" Icon="KeyboardOutline" Margin="5,0" />
-                    <TextBlock x:Name="LayoutNameTextBlock" Foreground="Gray" HorizontalAlignment="Left" Margin="0,0,10,0" VerticalAlignment="Center" />
+                    <fa:ImageAwesome Foreground="{StaticResource SecondaryTextBrush}" Height="10" Icon="KeyboardOutline" Margin="5,0" />
+                    <TextBlock x:Name="LayoutNameTextBlock" Foreground="{StaticResource SecondaryTextBrush}" HorizontalAlignment="Left" Margin="0,0,10,0" VerticalAlignment="Center" />
                 </StackPanel>
             </StackPanel>
         </Grid>

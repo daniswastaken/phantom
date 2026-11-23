@@ -136,10 +136,10 @@ namespace SafeExamBrowser.UserInterface.Mobile.Windows
 		{
 			if (appConfig != null)
 			{
-				InfoTextBlock.Inlines.Add(new Run($"Version {appConfig.ProgramInformationalVersion}") { Foreground = Brushes.DimGray });
+				InfoTextBlock.Inlines.Add(new Run($"Version {appConfig.ProgramInformationalVersion}") { Foreground = Brushes.White });
 				InfoTextBlock.Inlines.Add(new LineBreak());
 				InfoTextBlock.Inlines.Add(new LineBreak());
-				InfoTextBlock.Inlines.Add(new Run(appConfig.ProgramCopyright) { FontSize = 12 });
+				InfoTextBlock.Inlines.Add(new Run(appConfig.ProgramCopyright) { FontSize = 12, Foreground = Brushes.LightGray });
 			}
 		}
 	}

@@ -20,7 +20,7 @@
                     <RowDefinition Height="2*" />
                     <RowDefinition Height="3*" />
                 </Grid.RowDefinitions>
-                <ContentControl Grid.Row="0" x:Name="Icon" Foreground="Black" VerticalAlignment="Center" />
+                <ContentControl Grid.Row="0" x:Name="Icon" Foreground="White" VerticalAlignment="Center" />
                 <TextBlock Grid.Row="1" x:Name="Text" FontSize="11" Foreground="White" TextAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" VerticalAlignment="Bottom" />
             </Grid>
         </Button>

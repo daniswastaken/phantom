@@ -57,12 +57,12 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 			MainText.Inlines.InsertBefore(MainText.Inlines.FirstInline, new Run(text.Get(TextKey.AboutWindow_LicenseInfo)));
 			Title = text.Get(TextKey.AboutWindow_Title);
 
-			VersionInfo.Inlines.Add(new Run($"{text.Get(TextKey.Version)} {appConfig.ProgramInformationalVersion}") { FontSize = 12 });
+			VersionInfo.Inlines.Add(new Run($"{text.Get(TextKey.Version)} {appConfig.ProgramInformationalVersion}") { FontSize = 12, Foreground = Brushes.White });
 			VersionInfo.Inlines.Add(new LineBreak());
-			VersionInfo.Inlines.Add(new Run($"{text.Get(TextKey.Build)} {appConfig.ProgramBuildVersion}") { FontSize = 8, Foreground = Brushes.Gray });
+			VersionInfo.Inlines.Add(new Run($"{text.Get(TextKey.Build)} {appConfig.ProgramBuildVersion}") { FontSize = 8, Foreground = Brushes.LightGray });
 			VersionInfo.Inlines.Add(new LineBreak());
 			VersionInfo.Inlines.Add(new LineBreak());
-			VersionInfo.Inlines.Add(new Run(appConfig.ProgramCopyright) { FontSize = 10, Foreground = Brushes.Gray });
+			VersionInfo.Inlines.Add(new Run(appConfig.ProgramCopyright) { FontSize = 10, Foreground = Brushes.LightGray });
 		}
 	}
 }

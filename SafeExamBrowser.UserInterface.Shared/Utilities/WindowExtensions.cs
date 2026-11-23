@@ -15,6 +15,8 @@ namespace SafeExamBrowser.UserInterface.Shared.Utilities
 {
 	public static class WindowExtensions
 	{
+		private const int DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1 = 19;
+		private const int DWMWA_USE_IMMERSIVE_DARK_MODE = 20;
 		private const int GWL_STYLE = -16;
 		private const uint MF_BYCOMMAND = 0x0;
 		private const uint MF_ENABLED = 0x0;
@@ -45,6 +47,51 @@ namespace SafeExamBrowser.UserInterface.Shared.Utilities
 			if (systemMenu != IntPtr.Zero)
 			{
 				EnableMenuItem(systemMenu, SC_CLOSE, MF_BYCOMMAND | MF_ENABLED);
+			}
+		}
+
+		public static void EnableImmersiveDarkMode(this Window window)
+		{
+			if (window == null)
+			{
+				return;
+			}
+
+			void applyDarkMode(IntPtr hwnd)
+			{
+				if (hwnd == IntPtr.Zero)
+				{
+					return;
+				}
+
+				try
+				{
+					var useDark = 1;
+					if (DwmSetWindowAttribute(hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE, ref useDark, sizeof(int)) != 0)
+					{
+						DwmSetWindowAttribute(hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1, ref useDark, sizeof(int));
+					}
+				}
+				catch
+				{
+				}
+			}
+
+			var helper = new WindowInteropHelper(window);
+
+			if (helper.Handle != IntPtr.Zero)
+			{
+				applyDarkMode(helper.Handle);
+			}
+			else
+			{
+				EventHandler handler = null;
+				handler = (sender, args) =>
+				{
+					window.SourceInitialized -= handler;
+					applyDarkMode(new WindowInteropHelper(window).Handle);
+				};
+				window.SourceInitialized += handler;
 			}
 		}
 
@@ -85,6 +132,9 @@ namespace SafeExamBrowser.UserInterface.Shared.Utilities
 
 			SetWindowPos(helper.Handle, HWND_BOTTOM, x, y, width, height, SWP_SHOWWINDOW);
 		}
+
+		[DllImport("dwmapi.dll")]
+		private static extern int DwmSetWindowAttribute(IntPtr hwnd, int dwAttribute, ref int pvAttribute, int cbAttribute);
 
 		[DllImport("user32.dll")]
 		private static extern bool EnableMenuItem(IntPtr hMenu, uint uIDEnableItem, uint uEnable);

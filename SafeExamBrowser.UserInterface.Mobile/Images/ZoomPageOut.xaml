@@ -6,7 +6,7 @@
           <Path Data="F1 M 32.000,36.000 L 9.000,36.000 L 9.000,5.000 L 32.000,5.000 L 32.000,36.000 Z"/>
       </Canvas>
       <Canvas>
-          <Path StrokeThickness="2.0" Stroke="#ff666666" StrokeLineJoin="Round" Data="F1 M 27.000,14.870 L 22.129,10.000 M 27.000,28.869 L 13.000,28.869 L 13.000,10.000 L 22.129,10.000 L 22.129,14.870 L 27.000,14.870 L 27.000,28.869 Z"/>
+          <Path StrokeThickness="2.0" Stroke="#FFFFFFFF" StrokeLineJoin="Round" Data="F1 M 27.000,14.870 L 22.129,10.000 M 27.000,28.869 L 13.000,28.869 L 13.000,10.000 L 22.129,10.000 L 22.129,14.870 L 27.000,14.870 L 27.000,28.869 Z"/>
       </Canvas>
     </Canvas>
 </Viewbox>

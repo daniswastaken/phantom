@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:local="clr-namespace:SafeExamBrowser.UserInterface.Desktop.Controls"
-        mc:Ignorable="d" Background="#FFF0F0F0" Height="500" Width="750" MinHeight="250" MinWidth="250" Icon="../Images/SafeExamBrowser.ico">
+        mc:Ignorable="d" Background="Black" Foreground="White" Height="500" Width="750" MinHeight="250" MinWidth="250" Icon="../Images/SafeExamBrowser.ico">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -21,7 +21,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Border x:Name="Toolbar" Grid.Row="0" BorderBrush="LightGray" BorderThickness="0,0,0,1" Margin="5,0">
+        <Border x:Name="Toolbar" Grid.Row="0" Background="{StaticResource BackgroundBrush}" BorderBrush="#FF2A2A32" BorderThickness="0,0,0,1" Margin="5,0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -48,19 +48,19 @@
                         <fa:ImageAwesome Icon="Download" />
                     </Button>
                     <Popup x:Name="DownloadsPopup" AllowsTransparency="True" PopupAnimation="Slide" Placement="Custom" PlacementTarget="{Binding ElementName=BrowserControlHost}">
-                        <Border Background="{StaticResource BackgroundBrush}" BorderBrush="LightGray" BorderThickness="1,0,1,1" MinWidth="250">
+                        <Border Background="{StaticResource BackgroundBrush}" BorderBrush="{StaticResource PopupBorderBrush}" BorderThickness="1,0,1,1" MinWidth="250">
                             <StackPanel x:Name="Downloads" Orientation="Vertical" />
                         </Border>
                     </Popup>
                     <Button Grid.Column="6" x:Name="DarkReaderButton" Height="30" HorizontalAlignment="Center" Margin="2,5" Padding="6" Template="{StaticResource BrowserButton}" VerticalAlignment="Center" ToolTip="Dark Reader: OFF (Ctrl+Shift+D)">
-                        <fa:ImageAwesome x:Name="DarkReaderIcon" Icon="MoonOutline" Width="15" Height="15" Foreground="DimGray" />
+                        <fa:ImageAwesome x:Name="DarkReaderIcon" Icon="MoonOutline" Width="15" Height="15" Foreground="LightGray" />
                     </Button>
                     <Button Grid.Column="7" x:Name="VimiumButton" Height="30" HorizontalAlignment="Center" Margin="2,5" Padding="6" Template="{StaticResource BrowserButton}" VerticalAlignment="Center" ToolTip="Vimium: OFF (Ctrl+Shift+V)">
-                        <fa:ImageAwesome x:Name="VimiumIcon" Icon="KeyboardOutline" Width="16" Height="16" Foreground="DimGray" />
+                        <fa:ImageAwesome x:Name="VimiumIcon" Icon="KeyboardOutline" Width="16" Height="16" Foreground="LightGray" />
                     </Button>
                     <Button Grid.Column="8" x:Name="MenuButton" Height="30" HorizontalAlignment="Center" Margin="5" Template="{StaticResource BrowserButton}" VerticalAlignment="Center" />
                     <Popup x:Name="MenuPopup" IsOpen="False" AllowsTransparency="True" PopupAnimation="Slide" Placement="Custom" PlacementTarget="{Binding ElementName=BrowserControlHost}">
-                        <Border Background="{StaticResource BackgroundBrush}" BorderBrush="LightGray" BorderThickness="1,0,1,1" Width="250">
+                        <Border Background="{StaticResource BackgroundBrush}" BorderBrush="{StaticResource PopupBorderBrush}" BorderThickness="1,0,1,1" Width="250">
                             <StackPanel Orientation="Vertical">
                                 <Grid x:Name="ZoomMenuItem" Height="40">
                                     <Grid.ColumnDefinitions>
@@ -110,7 +110,7 @@
             </Grid>
         </Border>
         <WindowsFormsHost Grid.Row="1" x:Name="BrowserControlHost" />
-        <Border x:Name="Findbar" Grid.Row="2" BorderBrush="LightGray" BorderThickness="0,1,0,0" Margin="5,0" Visibility="Collapsed">
+        <Border x:Name="Findbar" Grid.Row="2" Background="{StaticResource BackgroundBrush}" BorderBrush="#FF2A2A32" BorderThickness="0,1,0,0" Margin="5,0" Visibility="Collapsed">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />

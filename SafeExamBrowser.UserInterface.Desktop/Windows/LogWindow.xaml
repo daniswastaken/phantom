@@ -9,6 +9,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Templates/Colors.xaml" />
                 <ResourceDictionary Source="../Templates/ScrollViewers.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -18,7 +19,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Background="White" Orientation="Horizontal">
+        <StackPanel Grid.Row="0" Background="{StaticResource BackgroundBrush}" Orientation="Horizontal">
             <CheckBox Cursor="Hand" IsChecked="{Binding AutoScroll}" Margin="5" VerticalContentAlignment="Center" Content="{Binding AutoScrollTitle}" />
             <CheckBox Cursor="Hand" IsChecked="{Binding Path=Topmost, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" Margin="5" VerticalContentAlignment="Center" Content="{Binding TopmostTitle}" />
         </StackPanel>

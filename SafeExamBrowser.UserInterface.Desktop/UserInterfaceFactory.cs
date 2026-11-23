@@ -180,7 +180,7 @@ namespace SafeExamBrowser.UserInterface.Desktop
 		{
 			// To be able to use FontAwesome in XAML icon resources, we need to make sure that the FontAwesome.WPF assembly is loaded into
 			// the AppDomain before attempting to load an icon resource - thus the creation of an unused image below...
-			ImageAwesome.CreateImageSource(FontAwesomeIcon.FontAwesome, Brushes.Black);
+			ImageAwesome.CreateImageSource(FontAwesomeIcon.FontAwesome, Brushes.White);
 		}
 	}
 }

@@ -137,12 +137,12 @@ namespace SafeExamBrowser.UserInterface.Mobile.Windows
 		{
 			Title = $"{appConfig.ProgramTitle} - Version {appConfig.ProgramInformationalVersion}";
 
-			InfoTextBlock.Inlines.Add(new Run($"Version {appConfig.ProgramInformationalVersion}") { FontSize = 12 });
+			InfoTextBlock.Inlines.Add(new Run($"Version {appConfig.ProgramInformationalVersion}") { FontSize = 12, Foreground = Brushes.White });
 			InfoTextBlock.Inlines.Add(new LineBreak());
-			InfoTextBlock.Inlines.Add(new Run($"Build {appConfig.ProgramBuildVersion}") { FontSize = 8, Foreground = Brushes.Gray });
+			InfoTextBlock.Inlines.Add(new Run($"Build {appConfig.ProgramBuildVersion}") { FontSize = 8, Foreground = Brushes.LightGray });
 			InfoTextBlock.Inlines.Add(new LineBreak());
 			InfoTextBlock.Inlines.Add(new LineBreak());
-			InfoTextBlock.Inlines.Add(new Run(appConfig.ProgramCopyright) { FontSize = 10, Foreground = Brushes.Gray });
+			InfoTextBlock.Inlines.Add(new Run(appConfig.ProgramCopyright) { FontSize = 10, Foreground = Brushes.LightGray });
 
 			model = new RuntimeWindowViewModel(LogTextBlock);
 			ProgressBar.DataContext = model;

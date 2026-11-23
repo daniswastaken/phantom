@@ -4,11 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SafeExamBrowser.UserInterface.Mobile"
-        mc:Ignorable="d" Background="White" Height="450" Width="675" ResizeMode="NoResize" Icon="../Images/SafeExamBrowser.ico" FontSize="16"
+        mc:Ignorable="d" Background="Black" Foreground="White" Height="450" Width="675" ResizeMode="NoResize" Icon="../Images/SafeExamBrowser.ico" FontSize="16"
         ShowInTaskbar="False" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Templates/Colors.xaml" />
                 <ResourceDictionary Source="../Templates/ScrollViewers.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -23,9 +24,9 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Image Grid.ColumnSpan="2" Source="pack://application:,,,/SafeExamBrowser.UserInterface.Mobile;component/Images/SplashScreen.png" Margin="0,5,0,0" />
-        <TextBlock x:Name="VersionInfo" Grid.Row="0" Grid.Column="1" Foreground="DimGray" Margin="35,95,100,10" TextWrapping="Wrap" />
+        <TextBlock x:Name="VersionInfo" Grid.Row="0" Grid.Column="1" Foreground="White" Margin="35,95,100,10" TextWrapping="Wrap" />
         <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Template="{StaticResource SmallBarScrollViewer}" VerticalScrollBarVisibility="Auto">
-            <TextBlock x:Name="MainText" Margin="10" TextWrapping="Wrap">
+            <TextBlock x:Name="MainText" Margin="10" Foreground="#FFE2E2E8" TextWrapping="Wrap">
                 <LineBreak />
                 <LineBreak />
                 <Bold><Underline>.NET Framework</Underline></Bold>

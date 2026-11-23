@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -76,7 +76,7 @@ namespace SafeExamBrowser.UserInterface.Mobile.Controls.ActionCenter
 				}
 				Popup.IsOpen = IsMouseOver;
 			}));
-			Popup.Opened += (o, args) => Grid.Background = Brushes.Gray;
+			Popup.Opened += (o, args) => Grid.Background = TryFindResource("ButtonHoverBrush") as Brush ?? new SolidColorBrush(Color.FromRgb(0x28, 0x28, 0x30));
 			Popup.Closed += (o, args) =>
 			{
 				Grid.Background = originalBrush;

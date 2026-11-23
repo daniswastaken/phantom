@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -88,8 +88,8 @@ namespace SafeExamBrowser.UserInterface.Desktop.Controls.Taskbar
 			}));
 			Popup.Opened += (o, args) =>
 			{
-				Background = Brushes.LightGray;
-				NotificationButton.Background = Brushes.LightGray;
+				Background = TryFindResource("ButtonHoverBrush") as Brush ?? new SolidColorBrush(Color.FromRgb(0x28, 0x28, 0x30));
+				NotificationButton.Background = TryFindResource("ButtonHoverBrush") as Brush ?? new SolidColorBrush(Color.FromRgb(0x28, 0x28, 0x30));
 			};
 			Popup.Closed += (o, args) =>
 			{

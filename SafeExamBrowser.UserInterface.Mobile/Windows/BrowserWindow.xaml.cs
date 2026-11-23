@@ -246,11 +246,11 @@ namespace SafeExamBrowser.UserInterface.Mobile.Windows
 		{
 			Dispatcher.InvokeAsync(() =>
 			{
-				DarkReaderIcon.Foreground = isDarkReaderEnabled ? Brushes.DodgerBlue : Brushes.DimGray;
+				DarkReaderIcon.Foreground = isDarkReaderEnabled ? Brushes.DodgerBlue : Brushes.LightGray;
 				DarkReaderButton.Opacity = isDarkReaderEnabled ? 1.0 : 0.6;
 				DarkReaderButton.ToolTip = $"Dark Reader: {(isDarkReaderEnabled ? "ON" : "OFF")} (Ctrl+Shift+D)";
 
-				VimiumIcon.Foreground = isVimiumEnabled ? Brushes.DodgerBlue : Brushes.DimGray;
+				VimiumIcon.Foreground = isVimiumEnabled ? Brushes.DodgerBlue : Brushes.LightGray;
 				VimiumButton.Opacity = isVimiumEnabled ? 1.0 : 0.6;
 				VimiumButton.ToolTip = $"Vimium: {(isVimiumEnabled ? "ON" : "OFF")} (Ctrl+Shift+V)";
 			});

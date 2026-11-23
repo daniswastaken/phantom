@@ -8,9 +8,9 @@ using System.Windows;
 // associated with an assembly.
 [assembly: AssemblyTitle("Phantom")]
 [assembly: AssemblyDescription("Phantom")]
-[assembly: AssemblyCompany("ETH Zürich")]
+[assembly: AssemblyCompany("daniswastaken")]
 [assembly: AssemblyProduct("Phantom")]
-[assembly: AssemblyCopyright("Copyright © 2026 ETH Zürich, IT Services")]
+[assembly: AssemblyCopyright("daniswastaken, Phantom")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from

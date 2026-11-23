@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SafeExamBrowser.UserInterface.Desktop"
-        mc:Ignorable="d" AllowsTransparency="True" Background="{DynamicResource BackgroundTransparentBrush}" BorderBrush="DodgerBlue" BorderThickness="1"
+        mc:Ignorable="d" AllowsTransparency="True" Background="{DynamicResource BackgroundTransparentBrush}" Foreground="{DynamicResource PrimaryTextBrush}" BorderBrush="DodgerBlue" BorderThickness="1"
         Title="Taskview" Topmost="True" Height="450" SizeToContent="WidthAndHeight" Width="800" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Window.Resources>
         <ResourceDictionary>

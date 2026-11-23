@@ -5,7 +5,7 @@
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SafeExamBrowser.UserInterface.Mobile"
-        mc:Ignorable="d" Height="750" Width="750" FontSize="16" ResizeMode="NoResize" Topmost="True" WindowState="Maximized">
+        mc:Ignorable="d" Background="Black" Foreground="White" Height="750" Width="750" FontSize="16" ResizeMode="NoResize" Topmost="True" WindowState="Maximized">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SafeExamBrowser.UserInterface.Mobile.Controls.ActionCenter"
-        mc:Ignorable="d" Title="ActionCenter" Height="1000" Width="400" Background="{DynamicResource BackgroundTransparentBrush}"
+        mc:Ignorable="d" Title="ActionCenter" Height="1000" Width="400" Background="{DynamicResource BackgroundTransparentBrush}" Foreground="{DynamicResource PrimaryTextBrush}"
         AllowsTransparency="True" FontSize="16" WindowStyle="None" Topmost="True" ResizeMode="NoResize">
     <Window.Resources>
         <ResourceDictionary>

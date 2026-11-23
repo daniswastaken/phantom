@@ -59,7 +59,7 @@ namespace SafeExamBrowser.UserInterface.Desktop.ViewModels
 			var time = message.DateTime.ToString("HH:mm:ss.fff");
 			var severity = message.Severity.ToString().ToUpper();
 
-			var infoRun = new Run($"{time} - ") { Foreground = Brushes.Gray };
+			var infoRun = new Run($"{time} - ") { Foreground = Brushes.DarkGray };
 			var messageRun = new Run($"{severity}: {message.Message}{Environment.NewLine}") { Foreground = GetBrushFor(message.Severity) };
 
 			textBlock.Inlines.Add(infoRun);
@@ -76,13 +76,13 @@ namespace SafeExamBrowser.UserInterface.Desktop.ViewModels
 			switch (severity)
 			{
 				case LogLevel.Debug:
-					return Brushes.Gray;
+					return Brushes.DarkGray;
 				case LogLevel.Error:
 					return Brushes.Red;
 				case LogLevel.Warning:
 					return Brushes.Orange;
 				default:
-					return Brushes.Black;
+					return Brushes.White;
 			}
 		}
 	}

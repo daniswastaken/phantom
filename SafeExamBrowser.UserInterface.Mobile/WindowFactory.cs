@@ -23,6 +23,7 @@ using SafeExamBrowser.UserInterface.Contracts.Windows;
 using SafeExamBrowser.UserInterface.Contracts.Windows.Data;
 using SafeExamBrowser.UserInterface.Mobile.Windows;
 using SafeExamBrowser.UserInterface.Shared;
+using SafeExamBrowser.UserInterface.Shared.Utilities;
 using SplashScreen = SafeExamBrowser.UserInterface.Mobile.Windows.SplashScreen;
 
 namespace SafeExamBrowser.UserInterface.Mobile
@@ -38,32 +39,32 @@ namespace SafeExamBrowser.UserInterface.Mobile
 
 		internal IWindow CreateAboutWindow(AppConfig appConfig)
 		{
-			return Guard(new AboutWindow(appConfig, text));
+			return GuardDark(new AboutWindow(appConfig, text));
 		}
 
 		internal IActionCenter CreateActionCenter()
 		{
-			return Guard(new ActionCenter());
+			return GuardDark(new ActionCenter());
 		}
 
 		internal IBrowserWindow CreateBrowserWindow(IBrowserControl control, BrowserSettings settings, bool isMainWindow, ILogger logger)
 		{
-			return Application.Current.Dispatcher.Invoke(() => Guard(new BrowserWindow(control, settings, isMainWindow, text, logger)));
+			return Application.Current.Dispatcher.Invoke(() => GuardDark(new BrowserWindow(control, settings, isMainWindow, text, logger)));
 		}
 
 		internal ICredentialsDialog CreateCredentialsDialog(CredentialsDialogPurpose purpose, string message, string title)
 		{
-			return Application.Current.Dispatcher.Invoke(() => Guard(new CredentialsDialog(purpose, message, title, text)));
+			return Application.Current.Dispatcher.Invoke(() => GuardDark(new CredentialsDialog(purpose, message, title, text)));
 		}
 
 		internal IExamSelectionDialog CreateExamSelectionDialog(IEnumerable<Exam> exams)
 		{
-			return Application.Current.Dispatcher.Invoke(() => Guard(new ExamSelectionDialog(exams, text)));
+			return Application.Current.Dispatcher.Invoke(() => GuardDark(new ExamSelectionDialog(exams, text)));
 		}
 
 		internal ILockScreen CreateLockScreen(string message, string title, IEnumerable<LockScreenOption> options, LockScreenSettings settings)
 		{
-			return Application.Current.Dispatcher.Invoke(() => Guard(new LockScreen(message, title, settings, text, options)));
+			return Application.Current.Dispatcher.Invoke(() => GuardDark(new LockScreen(message, title, settings, text, options)));
 		}
 
 		internal IWindow CreateLogWindow(ILogger logger)
@@ -72,7 +73,7 @@ namespace SafeExamBrowser.UserInterface.Mobile
 			var windowReadyEvent = new AutoResetEvent(false);
 			var windowThread = new Thread(() =>
 			{
-				window = Guard(new LogWindow(logger, text));
+				window = GuardDark(new LogWindow(logger, text));
 				window.Closed += (o, args) => window.Dispatcher.InvokeShutdown();
 				window.Show();
 
@@ -92,32 +93,32 @@ namespace SafeExamBrowser.UserInterface.Mobile
 
 		internal IPasswordDialog CreatePasswordDialog(string message, string title)
 		{
-			return Application.Current.Dispatcher.Invoke(() => Guard(new PasswordDialog(message, title, text)));
+			return Application.Current.Dispatcher.Invoke(() => GuardDark(new PasswordDialog(message, title, text)));
 		}
 
 		internal IPasswordDialog CreatePasswordDialog(TextKey message, TextKey title)
 		{
-			return Application.Current.Dispatcher.Invoke(() => Guard(new PasswordDialog(text.Get(message), text.Get(title), text)));
+			return Application.Current.Dispatcher.Invoke(() => GuardDark(new PasswordDialog(text.Get(message), text.Get(title), text)));
 		}
 
 		internal IProctoringFinalizationDialog CreateProctoringFinalizationDialog(bool requiresPassword)
 		{
-			return Application.Current.Dispatcher.Invoke(() => Guard(new ProctoringFinalizationDialog(requiresPassword, text)));
+			return Application.Current.Dispatcher.Invoke(() => GuardDark(new ProctoringFinalizationDialog(requiresPassword, text)));
 		}
 
 		internal IProctoringWindow CreateProctoringWindow(IProctoringControl control)
 		{
-			return Application.Current.Dispatcher.Invoke(() => Guard(new ProctoringWindow(control)));
+			return Application.Current.Dispatcher.Invoke(() => GuardDark(new ProctoringWindow(control)));
 		}
 
 		internal IRuntimeWindow CreateRuntimeWindow(AppConfig appConfig)
 		{
-			return Application.Current.Dispatcher.Invoke(() => Guard(new RuntimeWindow(appConfig, text)));
+			return Application.Current.Dispatcher.Invoke(() => GuardDark(new RuntimeWindow(appConfig, text)));
 		}
 
 		internal IServerFailureDialog CreateServerFailureDialog(string info, bool showFallback)
 		{
-			return Application.Current.Dispatcher.Invoke(() => Guard(new ServerFailureDialog(info, showFallback, text)));
+			return Application.Current.Dispatcher.Invoke(() => GuardDark(new ServerFailureDialog(info, showFallback, text)));
 		}
 
 		internal ISplashScreen CreateSplashScreen(AppConfig appConfig = null)
@@ -126,7 +127,7 @@ namespace SafeExamBrowser.UserInterface.Mobile
 			var windowReadyEvent = new AutoResetEvent(false);
 			var windowThread = new Thread(() =>
 			{
-				window = Guard(new SplashScreen(text, appConfig));
+				window = GuardDark(new SplashScreen(text, appConfig));
 				window.Closed += (o, args) => window.Dispatcher.InvokeShutdown();
 				window.Show();
 
@@ -146,17 +147,23 @@ namespace SafeExamBrowser.UserInterface.Mobile
 
 		internal ITaskbar CreateTaskbar(ILogger logger)
 		{
-			return Guard(new Taskbar(logger));
+			return GuardDark(new Taskbar(logger));
 		}
 
 		internal ITaskview CreateTaskview()
 		{
-			return Guard(new Taskview());
+			return GuardDark(new Taskview());
 		}
 
 		internal IVerificatorOverlay CreateVerificatorOverlay()
 		{
-			return Application.Current.Dispatcher.Invoke(() => Guard(new VerificatorOverlay()));
+			return Application.Current.Dispatcher.Invoke(() => GuardDark(new VerificatorOverlay()));
+		}
+
+		private T GuardDark<T>(T window) where T : Window
+		{
+			window.EnableImmersiveDarkMode();
+			return Guard(window);
 		}
 	}
 }

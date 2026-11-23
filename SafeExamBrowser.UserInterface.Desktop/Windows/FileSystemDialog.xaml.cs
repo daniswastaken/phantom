@@ -273,7 +273,7 @@ namespace SafeExamBrowser.UserInterface.Desktop.Windows
 			{
 				item.Cursor = Cursors.No;
 				item.Focusable = false;
-				textBlock.Foreground = Brushes.Gray;
+				textBlock.Foreground = Brushes.LightGray;
 			}
 
 			return item;

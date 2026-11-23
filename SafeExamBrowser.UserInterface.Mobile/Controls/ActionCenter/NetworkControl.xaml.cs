@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2026 ETH Zürich, IT Services
  * 
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -80,7 +80,7 @@ namespace SafeExamBrowser.UserInterface.Mobile.Controls.ActionCenter
 			Popup.Opened += (o, args) =>
 			{
 				adapter.StartWirelessNetworkScanning();
-				Grid.Background = Brushes.Gray;
+				Grid.Background = TryFindResource("ButtonHoverBrush") as Brush ?? new SolidColorBrush(Color.FromRgb(0x28, 0x28, 0x30));
 				Task.Delay(100).ContinueWith((task) => Dispatcher.Invoke(() =>
 				{
 					if (WirelessNetworksStackPanel.Children.Count > 0)

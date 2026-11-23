@@ -21,7 +21,7 @@
                     <RowDefinition Height="2*" />
                     <RowDefinition Height="3*" />
                 </Grid.RowDefinitions>
-                <fa:ImageAwesome Grid.Row="0" Foreground="Black" Icon="ClockOutline" Margin="2" VerticalAlignment="Center" />
+                <fa:ImageAwesome Grid.Row="0" Foreground="White" Icon="ClockOutline" Margin="2" VerticalAlignment="Center" />
                 <Grid Grid.Row="1" Background="Transparent" Margin="5,0" VerticalAlignment="Bottom">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*" />
