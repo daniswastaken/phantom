@@ -91,6 +91,21 @@ namespace SafeExamBrowser.UserInterface.Contracts.Browser
 		event ActionRequestedEventHandler ZoomResetRequested;
 
 		/// <summary>
+		/// Event fired when the user would like to toggle Dark Reader.
+		/// </summary>
+		event ActionRequestedEventHandler DarkReaderToggleRequested;
+
+		/// <summary>
+		/// Event fired when the user triggers the Phantom master toggle.
+		/// </summary>
+		event ActionRequestedEventHandler PhantomMasterToggleRequested;
+
+		/// <summary>
+		/// Event fired when the user would like to toggle Vimium.
+		/// </summary>
+		event ActionRequestedEventHandler VimiumToggleRequested;
+
+		/// <summary>
 		/// Sets the focus on the address bar of the window.
 		/// </summary>
 		void FocusAddressBar();
@@ -145,5 +160,10 @@ namespace SafeExamBrowser.UserInterface.Contracts.Browser
 		/// Updates the display value of the current page zoom. Value is expected to be in percentage.
 		/// </summary>
 		void UpdateZoomLevel(double value);
+
+		/// <summary>
+		/// Updates the active/inactive state of the Phantom extension toolbar buttons.
+		/// </summary>
+		void UpdatePhantomState(bool isDarkReaderEnabled, bool isVimiumEnabled);
 	}
 }

@@ -10,6 +10,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using CefSharp;
+using SafeExamBrowser.Browser.Phantom;
 using SafeExamBrowser.Browser.Wrapper;
 using SafeExamBrowser.Browser.Wrapper.Events;
 using SafeExamBrowser.Logging.Contracts;
@@ -32,6 +33,7 @@ namespace SafeExamBrowser.Browser
 		private readonly IJsDialogHandler javaScriptDialogHandler;
 		private readonly IKeyboardHandler keyboardHandler;
 		private readonly ILogger logger;
+		private readonly PhantomJsBridge phantomJsBridge;
 		private readonly IRenderProcessMessageHandler renderProcessMessageHandler;
 		private readonly IRequestHandler requestHandler;
 
@@ -58,7 +60,8 @@ namespace SafeExamBrowser.Browser
 			IKeyboardHandler keyboardHandler,
 			ILogger logger,
 			IRenderProcessMessageHandler renderProcessMessageHandler,
-			IRequestHandler requestHandler)
+			IRequestHandler requestHandler,
+			PhantomJsBridge phantomJsBridge = default)
 		{
 			this.clipboard = clipboard;
 			this.control = control;
@@ -71,6 +74,7 @@ namespace SafeExamBrowser.Browser
 			this.javaScriptDialogHandler = javaScriptDialogHandler;
 			this.keyboardHandler = keyboardHandler;
 			this.logger = logger;
+			this.phantomJsBridge = phantomJsBridge;
 			this.renderProcessMessageHandler = renderProcessMessageHandler;
 			this.requestHandler = requestHandler;
 		}
@@ -136,6 +140,7 @@ namespace SafeExamBrowser.Browser
 			control.FaviconUrlChanged += (w, b, u) => displayHandler.OnFaviconUrlChange(w, b, u);
 			control.FileDialogRequested += (w, b, m, t, p, f, e, d, c) => dialogHandler.OnFileDialog(w, b, m, t, p, f, e, d, c);
 			control.FocusedNodeChanged += (w, b, f, n) => renderProcessMessageHandler.OnFocusedNodeChanged(w, b, f, n);
+			control.FrameLoadEnd += Control_FrameLoadEnd;
 			control.GotFocusCefSharp += (w, b) => focusHandler.OnGotFocus(w, b);
 			control.IsBrowserInitializedChanged += Control_IsBrowserInitializedChanged;
 			control.JavaScriptDialog += (IWebBrowser w, IBrowser b, string u, CefJsDialogType t, string m, string p, IJsDialogCallback c, ref bool s, GenericEventArgs a) => a.Value = javaScriptDialogHandler.OnJSDialog(w, b, u, t, m, p, c, ref s);
@@ -206,6 +211,14 @@ namespace SafeExamBrowser.Browser
 			}
 		}
 
+		private void Control_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
+		{
+			if (e?.Frame != null && e.Frame.IsValid)
+			{
+				PhantomStateManager.Instance.SyncFrame(e.Frame);
+			}
+		}
+
 		private void Control_IsBrowserInitializedChanged(object sender, EventArgs e)
 		{
 			if (control.IsBrowserInitialized)
@@ -216,6 +229,11 @@ namespace SafeExamBrowser.Browser
 
 		private void WebBrowser_JavascriptMessageReceived(object sender, JavascriptMessageReceivedEventArgs e)
 		{
+			if (phantomJsBridge != null && phantomJsBridge.TryHandleMessage(e))
+			{
+				return;
+			}
+
 			clipboard.Update(e);
 		}
 	}

@@ -27,7 +27,7 @@ namespace SafeExamBrowser.Configuration.ConfigurationData
 {
 	internal class DataValues
 	{
-		private const string DEFAULT_CONFIGURATION_NAME = "SebClientSettings.seb";
+		private const string DEFAULT_CONFIGURATION_NAME = "PhantomClientSettings.seb";
 		private AppConfig appConfig;
 
 		internal string GetAppDataFilePath()
@@ -334,7 +334,7 @@ namespace SafeExamBrowser.Configuration.ConfigurationData
 			settings.Service.DisableVmwareOverlay = true;
 			settings.Service.DisableWindowsUpdate = true;
 			settings.Service.IgnoreService = true;
-			settings.Service.Policy = ServicePolicy.Mandatory;
+			settings.Service.Policy = ServicePolicy.Optional;
 			settings.Service.SetVmwareConfiguration = false;
 
 			settings.SessionMode = SessionMode.Normal;

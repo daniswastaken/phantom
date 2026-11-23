@@ -33,6 +33,11 @@ namespace SafeExamBrowser.Browser.Responsibilities.Window
 			this.httpClient = new HttpClient();
 		}
 
+		internal void RequestReloadFromPhantom()
+		{
+			ReloadRequested();
+		}
+
 		public override void Assume(WindowTask task)
 		{
 			if (task == WindowTask.RegisterEvents)

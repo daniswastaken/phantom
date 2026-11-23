@@ -79,7 +79,7 @@ namespace SafeExamBrowser.ResetUtility
 
 		private void InitializeLogging()
 		{
-			var appDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), nameof(SafeExamBrowser));
+			var appDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Phantom");
 			var logFolder = Path.Combine(appDataFolder, "Logs");
 			var logFilePrefix = DateTime.Now.ToString("yyyy-MM-dd\\_HH\\hmm\\mss\\s", CultureInfo.InvariantCulture);
 			var logFilePath = Path.Combine(logFolder, $"{logFilePrefix}_{nameof(ResetUtility)}.log");

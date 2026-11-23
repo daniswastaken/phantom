@@ -14,6 +14,7 @@ using SafeExamBrowser.Browser.Events;
 using SafeExamBrowser.Browser.Filters;
 using SafeExamBrowser.Browser.Handlers;
 using SafeExamBrowser.Browser.Integrations;
+using SafeExamBrowser.Browser.Phantom;
 using SafeExamBrowser.Browser.Responsibilities;
 using SafeExamBrowser.Browser.Responsibilities.Window;
 using SafeExamBrowser.Browser.Wrapper;
@@ -42,6 +43,7 @@ namespace SafeExamBrowser.Browser
 		private readonly SessionMode sessionMode;
 		private readonly IModuleLogger logger;
 
+		private DisplayResponsibility displayResponsibility;
 		private IEnumerable<Integration> integrations;
 		private IResponsibilityCollection<WindowTask> responsibilities;
 
@@ -90,8 +92,19 @@ namespace SafeExamBrowser.Browser
 
 		internal void Close()
 		{
-			Window.Close();
-			Control.Destroy();
+			PhantomStateManager.Instance.UnregisterWindow(this);
+			Window?.Close();
+			Control?.Destroy();
+		}
+
+		internal void RequestReload()
+		{
+			displayResponsibility?.RequestReloadFromPhantom();
+		}
+
+		internal void UpdatePhantomToolbarState(bool isDarkReaderEnabled, bool isVimiumEnabled)
+		{
+			Window?.UpdatePhantomState(isDarkReaderEnabled, isVimiumEnabled);
 		}
 
 		internal void Focus(bool forward)
@@ -158,6 +171,8 @@ namespace SafeExamBrowser.Browser
 
 			responsibilities.Delegate(WindowTask.InitializeRequestFilter);
 
+			var phantomJsBridge = new PhantomJsBridge(this, logger.CloneFor($"{nameof(PhantomJsBridge)} #{Id}"));
+
 			context.Control = new BrowserControl(
 				clipboard,
 				cefSharpControl,
@@ -171,9 +186,11 @@ namespace SafeExamBrowser.Browser
 				keyboardHandler,
 				controlLogger,
 				renderHandler,
-				requestHandler);
+				requestHandler,
+				phantomJsBridge);
 
 			Control.Initialize();
+			PhantomStateManager.Instance.RegisterWindow(this, cefSharpControl, requestFilter, Settings, windowSettings, logger);
 
 			logger.Debug("Initialized browser control.");
 		}
@@ -181,6 +198,11 @@ namespace SafeExamBrowser.Browser
 		internal void Show()
 		{
 			context.Window = context.UserInterfaceFactory.CreateBrowserWindow(Control, context.Settings, IsMainWindow, logger);
+
+			Window.DarkReaderToggleRequested += () => PhantomStateManager.Instance.ToggleDarkReader();
+			Window.PhantomMasterToggleRequested += () => PhantomStateManager.Instance.ToggleAll();
+			Window.VimiumToggleRequested += () => PhantomStateManager.Instance.ToggleVimium();
+			Window.UpdatePhantomState(PhantomStateManager.Instance.IsDarkReaderEnabled, PhantomStateManager.Instance.IsVimiumEnabled);
 
 			responsibilities.Delegate(WindowTask.RegisterEvents);
 			responsibilities.Delegate(WindowTask.InitiateCookieTraversal);
@@ -207,7 +229,7 @@ namespace SafeExamBrowser.Browser
 			var controlResponsibility = new ControlResponsibility(context);
 			var cookieResponsibility = new CookieResponsibility(context, integrations);
 			var dialogResponsibility = new DialogResponsibility(context, dialogHandler, fileSystemDialog, javaScriptDialogHandler);
-			var displayResponsibility = new DisplayResponsibility(context, displayHandler);
+			displayResponsibility = new DisplayResponsibility(context, displayHandler);
 			var downloadResponsibility = new DownloadResponsibility(context, downloadHandler);
 			var keyboardResponsibility = new KeyboardResponsibility(context, keyboardHandler);
 			var lifeSpanResponsibility = new LifeSpanResponsibility(context);
@@ -216,7 +238,11 @@ namespace SafeExamBrowser.Browser
 
 			controlResponsibility.TitleChanged += (t) => TitleChanged?.Invoke(t);
 			cookieResponsibility.UserIdentifierDetected += (i) => UserIdentifierDetected?.Invoke(i);
-			displayResponsibility.Closed += (i) => Closed?.Invoke(i);
+			displayResponsibility.Closed += (i) =>
+			{
+				PhantomStateManager.Instance.UnregisterWindow(this);
+				Closed?.Invoke(i);
+			};
 			displayResponsibility.IconChanged += (i) => IconChanged?.Invoke(i);
 			displayResponsibility.LoseFocusRequested += (f) => LoseFocusRequested?.Invoke(f);
 			downloadResponsibility.ConfigurationDownloadRequested += (f, a) => ConfigurationDownloadRequested?.Invoke(f, a);

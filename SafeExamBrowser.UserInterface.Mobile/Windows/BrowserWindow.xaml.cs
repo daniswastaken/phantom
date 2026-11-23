@@ -15,6 +15,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using SafeExamBrowser.Browser.Contracts.Events;
 using SafeExamBrowser.Core.Contracts.Resources.Icons;
@@ -58,11 +59,14 @@ namespace SafeExamBrowser.UserInterface.Mobile.Windows
 
 		public event AddressChangedEventHandler AddressChanged;
 		public event ActionRequestedEventHandler BackwardNavigationRequested;
+		public event ActionRequestedEventHandler DarkReaderToggleRequested;
 		public event ActionRequestedEventHandler DeveloperConsoleRequested;
 		public event FindRequestedEventHandler FindRequested;
 		public event ActionRequestedEventHandler ForwardNavigationRequested;
 		public event ActionRequestedEventHandler HomeNavigationRequested;
+		public event ActionRequestedEventHandler PhantomMasterToggleRequested;
 		public event ActionRequestedEventHandler ReloadRequested;
+		public event ActionRequestedEventHandler VimiumToggleRequested;
 		public event ActionRequestedEventHandler ZoomInRequested;
 		public event ActionRequestedEventHandler ZoomOutRequested;
 		public event ActionRequestedEventHandler ZoomResetRequested;
@@ -238,6 +242,20 @@ namespace SafeExamBrowser.UserInterface.Mobile.Windows
 			});
 		}
 
+		public void UpdatePhantomState(bool isDarkReaderEnabled, bool isVimiumEnabled)
+		{
+			Dispatcher.InvokeAsync(() =>
+			{
+				DarkReaderIcon.Foreground = isDarkReaderEnabled ? Brushes.DodgerBlue : Brushes.DimGray;
+				DarkReaderButton.Opacity = isDarkReaderEnabled ? 1.0 : 0.6;
+				DarkReaderButton.ToolTip = $"Dark Reader: {(isDarkReaderEnabled ? "ON" : "OFF")} (Ctrl+Shift+D)";
+
+				VimiumIcon.Foreground = isVimiumEnabled ? Brushes.DodgerBlue : Brushes.DimGray;
+				VimiumButton.Opacity = isVimiumEnabled ? 1.0 : 0.6;
+				VimiumButton.ToolTip = $"Vimium: {(isVimiumEnabled ? "ON" : "OFF")} (Ctrl+Shift+V)";
+			});
+		}
+
 		private void BrowserWindow_Closing(object sender, CancelEventArgs e)
 		{
 			if (isMainWindow)
@@ -252,6 +270,32 @@ namespace SafeExamBrowser.UserInterface.Mobile.Windows
 
 		private void BrowserWindow_KeyDown(object sender, KeyEventArgs e)
 		{
+			var chordCtrl = (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control;
+			var chordShift = (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift;
+			var chordAlt = (Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt;
+
+			if (chordCtrl && chordShift && !chordAlt && !BrowserControlHost.IsKeyboardFocusWithin)
+			{
+				if (e.Key == Key.D)
+				{
+					DarkReaderToggleRequested?.Invoke();
+					e.Handled = true;
+					return;
+				}
+				if (e.Key == Key.V)
+				{
+					VimiumToggleRequested?.Invoke();
+					e.Handled = true;
+					return;
+				}
+				if (e.Key == Key.P)
+				{
+					PhantomMasterToggleRequested?.Invoke();
+					e.Handled = true;
+					return;
+				}
+			}
+
 			if (e.Key == Key.Tab)
 			{
 				var hasShift = (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift;
@@ -433,6 +477,7 @@ namespace SafeExamBrowser.UserInterface.Mobile.Windows
 			BackwardButton.Click += (o, args) => BackwardNavigationRequested?.Invoke();
 			Closed += (o, args) => closed?.Invoke();
 			Closing += BrowserWindow_Closing;
+			DarkReaderButton.Click += (o, args) => DarkReaderToggleRequested?.Invoke();
 			DeveloperConsoleButton.Click += (o, args) => DeveloperConsoleRequested?.Invoke();
 			DownloadsButton.Click += (o, args) => DownloadsPopup.IsOpen = !DownloadsPopup.IsOpen;
 			DownloadsButton.MouseLeave += (o, args) => Task.Delay(250).ContinueWith(_ => Dispatcher.Invoke(() => DownloadsPopup.IsOpen = DownloadsPopup.IsMouseOver));
@@ -455,6 +500,7 @@ namespace SafeExamBrowser.UserInterface.Mobile.Windows
 			ReloadButton.Click += (o, args) => ReloadRequested?.Invoke();
 			SizeChanged += (o, args) => { DownloadsPopup.IsOpen = false; MenuPopup.IsOpen = false; };
 			SystemParameters.StaticPropertyChanged += SystemParameters_StaticPropertyChanged;
+			VimiumButton.Click += (o, args) => VimiumToggleRequested?.Invoke();
 			UrlTextBox.GotKeyboardFocus += (o, args) => UrlTextBox.SelectAll();
 			UrlTextBox.GotMouseCapture += UrlTextBox_GotMouseCapture;
 			UrlTextBox.LostKeyboardFocus += (o, args) => UrlTextBox.Tag = null;
@@ -532,6 +578,8 @@ if (typeof __SEB_focusElement === 'undefined') {
 				ReloadButton.Height = 35;
 				UrlTextBox.Height = 20;
 				DownloadsButton.Height = 35;
+				DarkReaderButton.Height = 35;
+				VimiumButton.Height = 35;
 				MenuButton.Height = 35;
 			}
 		}

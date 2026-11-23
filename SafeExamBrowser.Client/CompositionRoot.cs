@@ -279,6 +279,7 @@ namespace SafeExamBrowser.Client
 				uiFactory);
 			var operation = new BrowserOperation(actionCenter, context, logger, taskbar, taskview, uiFactory);
 
+			SafeExamBrowser.Browser.Phantom.PhantomStateManager.Instance.SetClipboardPolicy(context.Settings.Security.ClipboardPolicy.ToString());
 			context.Browser = browser;
 
 			return operation;

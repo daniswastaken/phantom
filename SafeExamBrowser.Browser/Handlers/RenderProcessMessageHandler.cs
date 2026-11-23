@@ -8,6 +8,7 @@
 
 using CefSharp;
 using SafeExamBrowser.Browser.Content;
+using SafeExamBrowser.Browser.Phantom;
 using SafeExamBrowser.Configuration.Contracts;
 using SafeExamBrowser.Configuration.Contracts.Cryptography;
 using SafeExamBrowser.I18n.Contracts;
@@ -63,6 +64,8 @@ namespace SafeExamBrowser.Browser.Handlers
 					frame.ExecuteJavaScriptAsync($"SafeExamBrowser.clipboard.update('', '{clipboard.Content}');");
 				}
 			}
+
+			PhantomStateManager.Instance.OnContextCreated(frame);
 		}
 
 		public void OnContextReleased(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame)

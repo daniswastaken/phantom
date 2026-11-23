@@ -283,6 +283,7 @@
     <Compile Include="Handlers\KeyboardHandlerTests.cs" />
     <Compile Include="Handlers\RequestHandlerTests.cs" />
     <Compile Include="Handlers\ResourceHandlerTests.cs" />
+    <Compile Include="Phantom\PhantomTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -218,13 +218,8 @@ namespace SafeExamBrowser.Monitoring.Applications
 			isClient &= process.Name == "SafeExamBrowser.Client.exe";
 			isClient &= process.OriginalName == "SafeExamBrowser.Client.exe";
 
-			isRuntime &= process.Name == "SafeExamBrowser.exe";
-			isRuntime &= process.OriginalName == "SafeExamBrowser.exe";
-
-#if !DEBUG
-			isClient &= process.Signature == "ecac9df025f5d208f6190fc4d6f9d329576598c7";
-			isRuntime &= process.Signature == "ecac9df025f5d208f6190fc4d6f9d329576598c7";
-#endif
+			isRuntime &= process.Name == "SafeExamBrowser.exe" || process.Name == "Phantom.exe";
+			isRuntime &= process.OriginalName == "SafeExamBrowser.exe" || process.OriginalName == "Phantom.exe";
 
 			return isClient || isRuntime;
 		}

@@ -24,8 +24,8 @@ namespace SafeExamBrowser.Service
 
 			service = new ServiceInstaller();
 			service.Description = "Performs operations which require elevated privileges.";
-			service.DisplayName = "Safe Exam Browser Service";
-			service.ServiceName = nameof(SafeExamBrowser);
+			service.DisplayName = "Phantom Service";
+			service.ServiceName = "PhantomService";
 			service.StartType = ServiceStartMode.Automatic;
 
 			Installers.Add(process);

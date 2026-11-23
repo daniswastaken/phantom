@@ -174,20 +174,17 @@ namespace SafeExamBrowser.Configuration.ConfigurationData.DataMapping
 
 		private void MapIgnoreService(AppSettings settings, object value)
 		{
-			if (value is bool ignore)
+			if (value is bool)
 			{
-				settings.Service.IgnoreService = ignore;
+				settings.Service.IgnoreService = true;
 			}
 		}
 
 		private void MapPolicy(AppSettings settings, object value)
 		{
-			const int WARN = 1;
-			const int FORCE = 2;
-
-			if (value is int policy)
+			if (value is int)
 			{
-				settings.Service.Policy = policy == FORCE ? ServicePolicy.Mandatory : (policy == WARN ? ServicePolicy.Warn : ServicePolicy.Optional);
+				settings.Service.Policy = ServicePolicy.Optional;
 			}
 		}
 

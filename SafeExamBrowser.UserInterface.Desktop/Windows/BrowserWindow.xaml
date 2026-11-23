@@ -36,6 +36,8 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0" x:Name="HomeButton" Height="30" HorizontalAlignment="Center" Margin="5" Template="{StaticResource BrowserButton}" VerticalAlignment="Center" />
                     <Button Grid.Column="1" x:Name="BackwardButton" Height="30" HorizontalAlignment="Center" Margin="5" Template="{StaticResource BrowserButton}" VerticalAlignment="Center" />
@@ -50,7 +52,13 @@
                             <StackPanel x:Name="Downloads" Orientation="Vertical" />
                         </Border>
                     </Popup>
-                    <Button Grid.Column="6" x:Name="MenuButton" Height="30" HorizontalAlignment="Center" Margin="5" Template="{StaticResource BrowserButton}" VerticalAlignment="Center" />
+                    <Button Grid.Column="6" x:Name="DarkReaderButton" Height="30" HorizontalAlignment="Center" Margin="2,5" Padding="6" Template="{StaticResource BrowserButton}" VerticalAlignment="Center" ToolTip="Dark Reader: OFF (Ctrl+Shift+D)">
+                        <fa:ImageAwesome x:Name="DarkReaderIcon" Icon="MoonOutline" Width="15" Height="15" Foreground="DimGray" />
+                    </Button>
+                    <Button Grid.Column="7" x:Name="VimiumButton" Height="30" HorizontalAlignment="Center" Margin="2,5" Padding="6" Template="{StaticResource BrowserButton}" VerticalAlignment="Center" ToolTip="Vimium: OFF (Ctrl+Shift+V)">
+                        <fa:ImageAwesome x:Name="VimiumIcon" Icon="KeyboardOutline" Width="16" Height="16" Foreground="DimGray" />
+                    </Button>
+                    <Button Grid.Column="8" x:Name="MenuButton" Height="30" HorizontalAlignment="Center" Margin="5" Template="{StaticResource BrowserButton}" VerticalAlignment="Center" />
                     <Popup x:Name="MenuPopup" IsOpen="False" AllowsTransparency="True" PopupAnimation="Slide" Placement="Custom" PlacementTarget="{Binding ElementName=BrowserControlHost}">
                         <Border Background="{StaticResource BackgroundBrush}" BorderBrush="LightGray" BorderThickness="1,0,1,1" Width="250">
                             <StackPanel Orientation="Vertical">

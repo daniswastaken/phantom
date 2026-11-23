@@ -9,6 +9,7 @@
 using System.Windows.Forms;
 using CefSharp;
 using SafeExamBrowser.Browser.Contracts.Events;
+using SafeExamBrowser.Browser.Phantom;
 using SafeExamBrowser.UserInterface.Contracts;
 
 namespace SafeExamBrowser.Browser.Handlers
@@ -25,6 +26,7 @@ namespace SafeExamBrowser.Browser.Handlers
 		internal event TabPressedEventHandler TabPressed;
 
 		private int? currentKeyDown = null;
+		private int? activePhantomChordKey = null;
 
 		public bool OnKeyEvent(IWebBrowser browserControl, IBrowser browser, KeyType type, int keyCode, int nativeKeyCode, CefEventFlags modifiers, bool isSystemKey)
 		{
@@ -75,6 +77,45 @@ namespace SafeExamBrowser.Browser.Handlers
 
 		public bool OnPreKeyEvent(IWebBrowser browserControl, IBrowser browser, KeyType type, int keyCode, int nativeKeyCode, CefEventFlags modifiers, bool isSystemKey, ref bool isKeyboardShortcut)
 		{
+			var ctrl = modifiers.HasFlag(CefEventFlags.ControlDown);
+			var shift = modifiers.HasFlag(CefEventFlags.ShiftDown);
+			var alt = modifiers.HasFlag(CefEventFlags.AltDown);
+			var isRepeat = modifiers.HasFlag(CefEventFlags.IsRepeat);
+
+			if (ctrl && shift && !alt && (keyCode == (int) Keys.D || keyCode == (int) Keys.V || keyCode == (int) Keys.P))
+			{
+				isKeyboardShortcut = true;
+
+				if ((type == KeyType.RawKeyDown || type == KeyType.KeyDown) && !isRepeat && activePhantomChordKey != keyCode)
+				{
+					activePhantomChordKey = keyCode;
+
+					if (keyCode == (int) Keys.D)
+					{
+						PhantomStateManager.Instance.ToggleDarkReader();
+					}
+					else if (keyCode == (int) Keys.V)
+					{
+						PhantomStateManager.Instance.ToggleVimium();
+					}
+					else if (keyCode == (int) Keys.P)
+					{
+						PhantomStateManager.Instance.ToggleAll();
+					}
+				}
+				else if (type == KeyType.KeyUp && activePhantomChordKey == keyCode)
+				{
+					activePhantomChordKey = null;
+				}
+
+				return true;
+			}
+
+			if (type == KeyType.KeyUp && activePhantomChordKey == keyCode)
+			{
+				activePhantomChordKey = null;
+			}
+
 			if (type == KeyType.KeyUp && keyCode == (int) Keys.F5)
 			{
 				ReloadRequested?.Invoke();

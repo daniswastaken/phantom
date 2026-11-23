@@ -6,7 +6,7 @@
             <xsl:apply-templates select="@*|node()" />
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="wix:File[substring(@Source, string-length(@Source) - string-length('SafeExamBrowser.exe') + 1) = 'SafeExamBrowser.exe']">
+    <xsl:template match="wix:File[substring(@Source, string-length(@Source) - string-length('Phantom.exe') + 1) = 'Phantom.exe']">
         <xsl:copy>
             <xsl:apply-templates select="@*|node()" />
             <xsl:attribute name="Id">

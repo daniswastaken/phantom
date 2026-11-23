@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using CefSharp;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SafeExamBrowser.Browser.Handlers;
+using SafeExamBrowser.Browser.Phantom;
 
 namespace SafeExamBrowser.Browser.UnitTests.Handlers
 {
@@ -21,6 +22,7 @@ namespace SafeExamBrowser.Browser.UnitTests.Handlers
 		[TestInitialize]
 		public void Initialize()
 		{
+			PhantomStateManager.Instance.ResetToDefaults();
 			sut = new KeyboardHandler();
 		}
 
@@ -161,6 +163,46 @@ namespace SafeExamBrowser.Browser.UnitTests.Handlers
 			Assert.IsFalse(zoomIn);
 			Assert.IsFalse(zoomOut);
 			Assert.IsTrue(zoomReset);
+		}
+
+		[TestMethod]
+		public void MustDetectPhantomShortcutsAndDeduplicateKeyDown()
+		{
+			var isShortcut = false;
+			var modifiers = CefEventFlags.ControlDown | CefEventFlags.ShiftDown;
+
+			Assert.IsFalse(PhantomStateManager.Instance.IsDarkReaderEnabled);
+			Assert.IsFalse(PhantomStateManager.Instance.IsVimiumEnabled);
+
+			// Ctrl+Shift+D: RawKeyDown toggles ON, subsequent KeyDown before KeyUp must not double-toggle
+			Assert.IsTrue(sut.OnPreKeyEvent(default(IWebBrowser), default(IBrowser), KeyType.RawKeyDown, (int) Keys.D, 0, modifiers, false, ref isShortcut));
+			Assert.IsTrue(isShortcut);
+			Assert.IsTrue(PhantomStateManager.Instance.IsDarkReaderEnabled);
+
+			Assert.IsTrue(sut.OnPreKeyEvent(default(IWebBrowser), default(IBrowser), KeyType.KeyDown, (int) Keys.D, 0, modifiers, false, ref isShortcut));
+			Assert.IsTrue(PhantomStateManager.Instance.IsDarkReaderEnabled);
+
+			Assert.IsTrue(sut.OnPreKeyEvent(default(IWebBrowser), default(IBrowser), KeyType.KeyUp, (int) Keys.D, 0, modifiers, false, ref isShortcut));
+			Assert.IsTrue(PhantomStateManager.Instance.IsDarkReaderEnabled);
+
+			// Ctrl+Shift+V: toggles Vimium ON
+			isShortcut = false;
+			Assert.IsTrue(sut.OnPreKeyEvent(default(IWebBrowser), default(IBrowser), KeyType.RawKeyDown, (int) Keys.V, 0, modifiers, false, ref isShortcut));
+			Assert.IsTrue(isShortcut);
+			Assert.IsTrue(PhantomStateManager.Instance.IsVimiumEnabled);
+			Assert.IsTrue(sut.OnPreKeyEvent(default(IWebBrowser), default(IBrowser), KeyType.KeyUp, (int) Keys.V, 0, modifiers, false, ref isShortcut));
+
+			// Ctrl+Shift+P: disables both, then restores both
+			isShortcut = false;
+			Assert.IsTrue(sut.OnPreKeyEvent(default(IWebBrowser), default(IBrowser), KeyType.RawKeyDown, (int) Keys.P, 0, modifiers, false, ref isShortcut));
+			Assert.IsTrue(isShortcut);
+			Assert.IsFalse(PhantomStateManager.Instance.IsDarkReaderEnabled);
+			Assert.IsFalse(PhantomStateManager.Instance.IsVimiumEnabled);
+			Assert.IsTrue(sut.OnPreKeyEvent(default(IWebBrowser), default(IBrowser), KeyType.KeyUp, (int) Keys.P, 0, modifiers, false, ref isShortcut));
+
+			Assert.IsTrue(sut.OnPreKeyEvent(default(IWebBrowser), default(IBrowser), KeyType.RawKeyDown, (int) Keys.P, 0, modifiers, false, ref isShortcut));
+			Assert.IsTrue(PhantomStateManager.Instance.IsDarkReaderEnabled);
+			Assert.IsTrue(PhantomStateManager.Instance.IsVimiumEnabled);
 		}
 	}
 }

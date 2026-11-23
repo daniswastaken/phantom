@@ -38,6 +38,13 @@ namespace SafeExamBrowser.SystemComponents
 
 		public void Save(string content, string path)
 		{
+			var directory = Path.GetDirectoryName(path);
+
+			if (!string.IsNullOrEmpty(directory))
+			{
+				Directory.CreateDirectory(directory);
+			}
+
 			File.WriteAllText(path, content);
 		}
 

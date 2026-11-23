@@ -122,6 +122,10 @@
     <Compile Include="Integrations\MoodleIntegration.cs" />
     <Compile Include="Integrations\Strategies\CookieStrategy.cs" />
     <Compile Include="Integrations\Strategies\ResponseStrategy.cs" />
+    <Compile Include="Phantom\PhantomAssetProvider.cs" />
+    <Compile Include="Phantom\PhantomConfig.cs" />
+    <Compile Include="Phantom\PhantomJsBridge.cs" />
+    <Compile Include="Phantom\PhantomStateManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Responsibilities\BrowserTask.cs" />
     <Compile Include="Responsibilities\Browser\BrowserResponsibility.cs" />
@@ -250,6 +254,14 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\PageZoom.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Phantom\Assets\darkreader.min.js" />
+    <EmbeddedResource Include="Phantom\Assets\phantom-darkreader.js" />
+    <EmbeddedResource Include="Phantom\Assets\phantom-vimium.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Phantom\Assets\build-assets.mjs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
