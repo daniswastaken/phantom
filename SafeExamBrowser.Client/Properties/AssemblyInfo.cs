@@ -7,7 +7,7 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SafeExamBrowser.Client")]
-[assembly: AssemblyDescription("Safe Exam Browser")]
+[assembly: AssemblyDescription("Phantom")]
 [assembly: AssemblyCompany("ETH Zürich")]
 [assembly: AssemblyProduct("SafeExamBrowser.Client")]
 [assembly: AssemblyCopyright("Copyright © 2026 ETH Zürich, IT Services")]

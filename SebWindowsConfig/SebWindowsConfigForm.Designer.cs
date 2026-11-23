@@ -552,12 +552,12 @@ namespace SebWindowsConfig
 			// 
 			// openFileDialogSebConfigFile
 			// 
-			this.openFileDialogSebConfigFile.DefaultExt = "seb";
+			this.openFileDialogSebConfigFile.DefaultExt = "phantom";
 			this.openFileDialogSebConfigFile.Title = "Open SEB config file";
 			// 
 			// saveFileDialogSebConfigFile
 			// 
-			this.saveFileDialogSebConfigFile.DefaultExt = "seb";
+			this.saveFileDialogSebConfigFile.DefaultExt = "phantom";
 			this.saveFileDialogSebConfigFile.Title = "Save SEB config file";
 			// 
 			// imageListTabIcons

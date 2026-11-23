@@ -111,24 +111,24 @@ namespace SebWindowsConfig.Utilities
 		#region Constants
 
 		// Name and location of SEB configuration files and logfiles
-		public const string SEB_CLIENT_CONFIG = "SebClientSettings.seb";
-		public const string SEB_CLIENT_LOG = "SebClient.log";
+		public const string SEB_CLIENT_CONFIG = "PhantomClientSettings.phantom";
+		public const string SEB_CLIENT_LOG = "PhantomClient.log";
 		private const string XUL_RUNNER_CONFIG = "config.json";
-		public const string SEB_SHORTNAME = "SEB";
+		public const string SEB_SHORTNAME = "PHANTOM";
 		public const string XUL_RUNNER = "firefox.exe";
 		private const string XUL_RUNNER_INI = "seb.ini";
 
 		// Application path contains [MANUFACTURER]\[PRODUCT_NAME]
 		// (see also "SebWindowsPackageSetup" Project in MS Visual Studio 10)
-		public const string MANUFACTURER_LOCAL     = "SafeExamBrowser";
+		public const string MANUFACTURER_LOCAL     = "Phantom";
         //private const string MANUFACTURER         = "ETH Zuerich";
-        public const string PRODUCT_NAME           = "SafeExamBrowser";
+        public const string PRODUCT_NAME           = "Phantom";
         public const string SEB_SERVICE_DIRECTORY = "SebWindowsServiceWCF";
         public const string SEB_BROWSER_DIRECTORY = "SebWindowsBrowser";
         private const string XUL_RUNNER_DIRECTORY = "xulrunner";
         private const string XUL_SEB_DIRECTORY = "xul_seb";
-        public const string FILENAME_SEB = "SafeExamBrowser.exe";
-        public const string FILENAME_SEBCONFIGTOOL = "SEBConfigTool.exe";
+        public const string FILENAME_SEB = "Phantom.exe";
+        public const string FILENAME_SEBCONFIGTOOL = "PhantomConfigTool.exe";
         public const string FILENAME_SEBSERVICE = "SebWindowsServiceWCF.exe";
         public const string FILENAME_DLL_FLECK = "Fleck.dll";
         public const string FILENAME_DLL_ICONLIB = "IconLib.dll";
@@ -152,8 +152,8 @@ namespace SebWindowsConfig.Utilities
         private const int    DEFAULT_RECV_TIMEOUT    = 100;
         private const int    DEFAULT_NUM_MESSAGES    = 3;
 
-        public const string SEB_NEW_DESKTOP_NAME     = "SEBDesktop";
-        public const string SEB_WINDOWS_SERVICE_NAME = "SebWindowsService";
+        public const string SEB_NEW_DESKTOP_NAME     = "PhantomDesktop";
+        public const string SEB_WINDOWS_SERVICE_NAME = "PhantomWindowsService";
 
         #endregion
 

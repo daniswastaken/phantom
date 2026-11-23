@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SafeExamBrowser.Service")]
-[assembly: AssemblyDescription("Safe Exam Browser")]
+[assembly: AssemblyDescription("Phantom")]
 [assembly: AssemblyCompany("ETH Zürich")]
 [assembly: AssemblyProduct("SafeExamBrowser.Service")]
 [assembly: AssemblyCopyright("Copyright © 2026 ETH Zürich, IT Services")]

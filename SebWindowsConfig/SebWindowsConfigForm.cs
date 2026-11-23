@@ -1265,7 +1265,7 @@ namespace SebWindowsConfig
 			// Set the default directory and file name in the File Dialog
 			openFileDialogSebConfigFile.InitialDirectory = currentDireSebConfigFile;
 			openFileDialogSebConfigFile.FileName = "";
-			openFileDialogSebConfigFile.DefaultExt = "seb";
+			openFileDialogSebConfigFile.DefaultExt = "phantom";
 			openFileDialogSebConfigFile.Filter = "SEB Files|*.seb";
 
 			// Get the user inputs in the File Dialog
